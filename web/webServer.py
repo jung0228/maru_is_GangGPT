@@ -329,15 +329,15 @@ def configPWM(command_input, response):
         servoPosInit()
 
     elif 'PWMD' == command_input:
-        init_pwm0,init_pwm1,init_pwm2,init_pwm3,init_pwm4=300,300,300,300,300
-        T_sc.initConfig(0,300,1)
-        replace_num('init_pwm0 = ', 300)
+        init_pwm0,init_pwm1,init_pwm2,init_pwm3,init_pwm4=90,90,90,90,90
+        T_sc.initConfig(0,90,1)
+        replace_num('init_pwm0 = ', 90)
 
-        P_sc.initConfig(1,300,1)
-        replace_num('init_pwm1 = ', 300)
+        P_sc.initConfig(1,90,1)
+        replace_num('init_pwm1 = ', 90)
 
-        scGear.initConfig(2,300,1)
-        replace_num('init_pwm2 = ', 300)
+        scGear.initConfig(2,90,1)
+        replace_num('init_pwm2 = ', 90)
 
 
 def update_code():
