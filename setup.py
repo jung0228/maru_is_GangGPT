@@ -128,8 +128,9 @@ else:
             break
 
 commands_3 = [
+    "cd ~",
     "sudo git clone https://github.com/oblique/create_ap",
-    "cd " + thisPath + "/create_ap && sudo make install",
+    "cd create_ap && sudo make install",
     # "cd //home/pi/create_ap && sudo make install",
     "sudo apt-get install -y util-linux procps hostapd iproute2 iw haveged dnsmasq"
 ]
