@@ -529,12 +529,13 @@ if __name__ == '__main__':
     flask_app.startthread()
 
     try:
-        
+        # global WS2812
         robotlight_check = robotLight.check_rpi_model()
         if robotlight_check == 5:
             print("\033[1;33m WS2812 officially does not support Raspberry Pi 5 for the time being, and the WS2812 LED cannot be used on Raspberry Pi 5.\033[0m")
             WS2812_mark = 0 # WS2812 not compatible
         else:
+            print("WS2812 success!")
             WS2812_mark = 1
             WS2812=robotLight.RobotWS2812()
             WS2812.start()

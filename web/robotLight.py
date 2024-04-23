@@ -57,7 +57,7 @@ class RobotWS2812(threading.Thread):
         # Intialize the library (must be called once before other functions).
         self.strip.begin()
 
-        super(WS2812LED, self).__init__(*args, **kwargs)
+        super(RobotWS2812, self).__init__(*args, **kwargs)
         self.__flag = threading.Event()
         self.__flag.clear()
 

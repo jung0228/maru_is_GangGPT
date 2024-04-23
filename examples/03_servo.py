@@ -42,16 +42,20 @@ pca.deinit()
 
 def test(channel):
     for i in range(180): # The servo turns from 0 to 180 degrees.
-        set_angle(channel, i)
+        for channel in range(0,16) :
+            set_angle(channel, i)
+        # set_angle(channel, i)
         time.sleep(0.01)
     time.sleep(0.5)
     for i in range(180): # The servo turns from 180 to 0 degrees.
-        set_angle(channel, 180-i)
+        for channel in range(0,16) :
+            set_angle(channel, i)
+        # set_angle(channel, 180-i)
         time.sleep(0.01)
     time.sleep(0.5)
 
 if __name__ == "__main__":
-    channel = 1
+    channel = 0
     while True:
         test(channel)
 
