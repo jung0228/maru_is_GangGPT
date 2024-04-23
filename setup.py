@@ -66,7 +66,7 @@ def check_os_bit():
     return int(os_bit)
 
 
-commands_1 = [
+commands_apt = [
 "sudo apt-get update",
 "sudo apt-get install python3-gpiozero python3-pigpio",
 "sudo apt-get install  -y python3-opencv",
@@ -77,16 +77,16 @@ commands_1 = [
 "sudo apt-get install -y opencv-data",
 "sudo apt-get install -y python3-pyaudio"
 ]
-mark_1 = 0
+mark_apt = 0
 for x in range(3):
-    for command in commands_1:
+    for command in commands_apt:
         if os.system(command) != 0:
-            print("Error running installation step 1")
-            mark_1 = 1
-    if mark_1 == 0:
+            print("Error running installation step apt")
+            mark_apt = 1
+    if mark_apt == 0:
         break
 
-commands_2 = [
+commands_pip_1 = [
 "sudo pip3 install adafruit-circuitpython-motor",
 "sudo pip3 install adafruit-circuitpython-pca9685",
 "sudo pip3 install flask",
@@ -97,14 +97,35 @@ commands_2 = [
 "sudo pip3 install SpeechRecognition",
 "sudo pip3 install pocketsphinx"
 ]
-mark_2 = 0
-for x in range(3):
-    for command in commands_2:
-        if os.system(command) != 0:
-            print("Error running installation step 1")
-            mark_2 = 1
-    if mark_2 == 0:
-        break
+commands_pip_2 = [
+"sudo pip3 install adafruit-circuitpython-motor --break-system-packages",
+"sudo pip3 install adafruit-circuitpython-pca9685 --break-system-packages",
+"sudo pip3 install flask --break-system-packages",
+"sudo pip3 install flask_cors --break-system-packages",
+"sudo pip3 install imutils zmq pybase64 psutil --break-system-packages",
+"sudo pip3 install websockets --break-system-packages",
+"sudo pip3 install adafruit-circuitpython-ads7830 --break-system-packages",
+"sudo pip3 install SpeechRecognition --break-system-packages",
+"sudo pip3 install pocketsphinx --break-system-packages"
+]
+mark_pip = 0
+OS_version = check_raspbain_version()
+if OS_version <= 11:
+    for x in range(3):
+        for command in commands_pip_1:
+            if os.system(command) != 0:
+                print("Error running installation step pip")
+                mark_pip = 1
+        if mark_pip == 0:
+            break
+else:
+    for x in range(3):
+        for command in commands_pip_2:
+            if os.system(command) != 0:
+                print("Error running installation step pip")
+                mark_pip = 1
+        if mark_pip == 0:
+            break
 
 commands_3 = [
     "sudo git clone https://github.com/oblique/create_ap",
@@ -115,9 +136,9 @@ commands_3 = [
 
 mark_3 = 0
 for x in range(3):
-    for command in commands_2:
+    for command in commands_3:
         if os.system(command) != 0:
-            print("Error running installation step 2")
+            print("Error running installation step 3")
             mark_2 = 1
     if mark_2 == 0:
         break
