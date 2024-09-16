@@ -3,80 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robot Control</title>
+    <title>Robot Voice Control</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px;
-        }
-        .controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px;
-        }
-        .control-row {
             display: flex;
             justify-content: center;
-            margin: 5px;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
         }
-        button {
-            font-size: 18px;
-            padding: 20px 30px;
-            margin: 5px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 300px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #voiceButton {
+            background-color: #007bff;
+            color: #fff;
             border: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #voiceButton:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        #voiceButton:active {
+            background-color: #003d80;
+            transform: scale(0.95);
+        }
+
+        p {
+            margin: 15px 0;
+            font-size: 16px;
+            line-height: 1.5;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
             border-radius: 5px;
         }
-        button:hover {
-            background-color: #45a049;
-        }
-        .camera-icon {
-            font-size: 50px;
-            color: #4CAF50;
-            margin-bottom: 10px;
-        }
-        img {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 5px;
-            width: 640px;
-            height: 480px;
-            margin-bottom: 20px;
+
+        #status {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Robot Control</h1>
-    
-    <!-- 카메라 피드 -->
-    <h2>Camera Feed</h2>
-    <img src="/video_feed" alt="Camera Feed">
-    
-    <!-- 십자가 형태의 제어 버튼 -->
-    <div class="controls">
-        <form action="/control" method="post">
-            <div class="control-row">
-                <button name="action" value="forward">↑</button>
-            </div>
-            <div class="control-row">
-                <button name="action" value="right">←</button>
-                <button name="action" value="stop">⏹</button>
-                <button name="action" value="left">→</button>
-            </div>
-            <div class="control-row">
-                <button name="action" value="backward">↓</button>
-            </div>
-        </form>
+    <div class="container">
+        <h1>Control the Robot</h1>
+        <button id="voiceButton">🎤 Press and Speak</button>
+        <p id="status">Status: Not Listening</p>
+        <p id="recognizedText">Recognized Text: None</p>
+        <p id="response">Response: None</p>
     </div>
+
+    <script>
+        const voiceButton = document.getElementById('voiceButton');
+        const status = document.getElementById('status');
+        const recognizedText = document.getElementById('recognizedText');
+        const response = document.getElementById('response');
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+
+        recognition.onstart = () => {
+            status.textContent = "Status: Listening...";
+        };
+
+        recognition.onspeechend = () => {
+            status.textContent = "Status: Stopped Listening";
+            recognition.stop();
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            recognizedText.textContent = "Recognized Text: " + transcript;
+            sendCommand(transcript);
+        };
+
+        voiceButton.addEventListener('click', () => {
+            recognition.start();
+        });
+
+        function sendCommand(command) {
+            fetch('/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ command: command }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                response.textContent = "Response: " + data.response;
+            })
+            .catch(error => {
+                response.textContent = "Error: " + error;
+            });
+        }
+    </script>
 </body>
 </html>
