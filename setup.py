@@ -140,8 +140,8 @@ for x in range(3):
     for command in commands_3:
         if os.system(command) != 0:
             print("Error running installation step 3")
-            mark_2 = 1
-    if mark_2 == 0:
+            mark_3=1
+    if mark_3 == 0:
         break
 
 # commands_3 = [

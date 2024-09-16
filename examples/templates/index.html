@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        .control-row {
+            display: flex;
+            justify-content: center;
+            margin: 5px;
+        }
+        button {
+            font-size: 18px;
+            padding: 20px 30px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .camera-icon {
+            font-size: 50px;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        img {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            width: 640px;
+            height: 480px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Robot Control</h1>
+    
+    <!-- 카메라 피드 -->
+    <h2>Camera Feed</h2>
+    <img src="/video_feed" alt="Camera Feed">
+    
+    <!-- 십자가 형태의 제어 버튼 -->
+    <div class="controls">
+        <form action="/control" method="post">
+            <div class="control-row">
+                <button name="action" value="forward">↑</button>
+            </div>
+            <div class="control-row">
+                <button name="action" value="right">←</button>
+                <button name="action" value="stop">⏹</button>
+                <button name="action" value="left">→</button>
+            </div>
+            <div class="control-row">
+                <button name="action" value="backward">↓</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
