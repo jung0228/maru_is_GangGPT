@@ -1,3 +1,4 @@
+# 마루는 강GPT
 웹 서버 기반으로 음성을 인식해서 로봇을 제어합니다! 
 
 ![KakaoTalk_Photo_2024-12-18-14-41-25](https://github.com/user-attachments/assets/1bb520d7-ffd6-4bbb-86ff-1bbd77caeb24)
